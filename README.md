@@ -29,7 +29,10 @@ ai-blog-generator-interview
 
 ---
 ### 🖥️ Using the UI
-<video controls src="demo/demo.mp4" title="Title"></video>
+
+https://github.com/user-attachments/assets/8b3ce437-bb9e-45cc-bdf7-ca726334c84e
+
+
 
 ## 🔧 Setup Instructions
 ### 1  Get an OpenAI API key (if you don’t have one)
@@ -99,7 +102,8 @@ Sample JSON Response
 ### Screenshot
 Postman Response
 
-![Postman Response](screenshots\postman_response.png)
+![postman_response](https://github.com/user-attachments/assets/79292daf-abe2-4b52-9a51-515839106f00)
+
 
 
 ### 📂 Sample Output
