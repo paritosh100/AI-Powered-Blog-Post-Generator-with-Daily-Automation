@@ -17,14 +17,16 @@ Built with **Flask**, **APScheduler**, and the **OpenAI API**, this system can c
 
 ## 🏗️ Project Structure
 ```
-ai-blog-generator-interview
-├── app.py # Main Flask app + scheduler
-├── ai_generator.py # OpenAI prompt & post‑processing
-├── seo_fetcher.py # Mock SEO‑metric provider
-├── requirements.txt # Dependencies
-├── .env # API key (git‑ignored)
-├── generated_posts/ # Where .md files are saved
-└── README.md
+ai-blog-generator-interview/
+├── app.py # Flask app + scheduler + static serving
+├── ai_generator.py # OpenAI prompt + placeholder replacement
+├── seo_fetcher.py # Mock SEO metric provider
+├── requirements.txt
+├── .env # YOUR OpenAI key (git‑ignored)
+├── generated_posts/ # Auto‑saved markdown posts
+└── static/
+  ├── index.html # Material UI + Marked.js
+  └── styles.css # Custom overrides
 ```
 
 ---
