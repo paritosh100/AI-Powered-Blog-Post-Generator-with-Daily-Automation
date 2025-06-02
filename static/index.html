@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Blog Generator</title>
+  <!-- Materialize CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Marked.js converts Markdown to HTML in the browser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body class="blue-grey lighten-5">
+  <!-- Top Bar -->
+  <nav class="blue darken-3">
+    <div class="nav-wrapper container">
+      <span class="brand-logo">AI Blog Generator</span>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container" style="margin-top: 40px;">
+    <div class="row">
+      <div class="col s12 m10 offset-m1">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">Generate a Blog Post</span>
+            <div class="input-field">
+              <input id="keyword" type="text" autocomplete="off" />
+              <label for="keyword">Keyword</label>
+            </div>
+            <button id="generateBtn" class="waves-effect waves-light btn blue darken-3">
+              Generate
+            </button>
+
+            <!-- Loading spinner -->
+            <div id="loading" class="center-align" style="margin-top:30px; display:none;">
+              <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue-only">
+                  <div class="circle-clipper left"><div class="circle"></div></div>
+                  <div class="gap-patch"><div class="circle"></div></div>
+                  <div class="circle-clipper right"><div class="circle"></div></div>
+                </div>
+              </div>
+              <p style="margin-top:10px;">Generating&hellip;</p>
+            </div></div>
+                  <div class="gap-patch"><div class="circle"></div></div>
+                  <div class="circle-clipper right"><div class="circle"></div></div>
+                </div>
+              </div>
+              <!-- <p style="margin-top: 10px;">Generating&hellip;</p> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blog Output -->
+    <div id="outputCard" class="card" style="display:none; margin-bottom:60px;">
+      <div class="card-content blog-content" id="output"></div>
+    </div>
+  </main>
+
+  <!-- Materialize JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('generateBtn');
+      const keywordInput = document.getElementById('keyword');
+      const output = document.getElementById('output');
+      const outputCard = document.getElementById('outputCard');
+      const loading = document.getElementById('loading');
+      const API_ROOT = window.location.origin;
+
+      btn.addEventListener('click', async () => {
+        const kw = keywordInput.value.trim();
+        if (!kw) {
+          M.toast({ html: 'Please enter a keyword', classes: 'red' });
+          return;
+        }
+
+        output.innerHTML = '';
+        outputCard.style.display = 'none';
+        loading.style.display = 'block';
+
+        try {
+          const res = await fetch(`${API_ROOT}/generate?keyword=${encodeURIComponent(kw)}`);
+          if (!res.ok || !res.headers.get('content-type')?.includes('application/json')) {
+            throw new Error(`Server returned ${res.status}`);
+          }
+          const data = await res.json();
+
+          if (data.blog_post) {
+            output.innerHTML = marked.parse(data.blog_post);
+            outputCard.style.display = 'block';
+            M.toast({ html: 'Blog post generated!', classes: 'green' });
+          } else if (data.error) {
+            output.innerHTML = `<p class="error">${data.error}</p>`;
+            outputCard.style.display = 'block';
+          } else {
+            output.innerHTML = '<p class="error">Unexpected response.</p>';
+            outputCard.style.display = 'block';
+          }
+        } catch (err) {
+          output.innerHTML = `<p class="error">Error: ${err.message}</p>`;
+          outputCard.style.display = 'block';
+        } finally {
+          loading.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('generateBtn');
+      const keywordInput = document.getElementById('keyword');
+      const output = document.getElementById('output');
+      const loading = document.getElementById('loading');
+      const API_ROOT = window.location.origin; // same-origin for fetch
+
+      btn.addEventListener('click', async () => {
+        const kw = keywordInput.value.trim();
+        if (!kw) {
+          M.toast({ html: 'Please enter a keyword', classes: 'red' });
+          return;
+        }
+
+        output.innerHTML = '';
+        loading.style.display = 'block';
+        loading.classList.remove('hidden');
+
+        try {
+          const res = await fetch(`${API_ROOT}/generate?keyword=${encodeURIComponent(kw)}`);
+          if (!res.ok || !res.headers.get('content-type')?.includes('application/json')) {
+            throw new Error(`Server returned ${res.status}`);
+          }
+          const data = await res.json();
+
+          if (data.blog_post) {
+            output.innerHTML = marked.parse(data.blog_post);
+            M.toast({ html: 'Blog post generated!', classes: 'green' });
+          } else if (data.error) {
+            output.innerHTML = `<p class="error">${data.error}</p>`;
+          } else {
+            output.innerHTML = '<p class="error">Unexpected response.</p>';
+          }
+        } catch (err) {
+          output.innerHTML = `<p class="error">Error: ${err.message}</p>`;
+        } finally {
+          loading.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
