@@ -5,12 +5,6 @@ Built with **Flask**, **APScheduler**, and the **OpenAI API**, this system can c
 
 ---
 
-### Demo
-
-![Demo](demo/demo.mp4)
-
----
-
 ## 🚀 Features
 
 - 🔗 **REST API** (`/generate`) to create blog posts by keyword  
@@ -35,8 +29,6 @@ ai-blog-generator-interview
 
 ---
 ### 🖥️ Using the UI
-Demo
-
 <video controls src="demo/demo.mp4" title="Title"></video>
 
 ## 🔧 Setup Instructions
